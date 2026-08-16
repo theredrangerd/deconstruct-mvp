@@ -69,9 +69,9 @@ that have already banned them have seen measurable drops in ocean plastic.
 
 ## Feedback
 
-Send me a DM on Reddit — u/PosteriorMotives24. Useful feedback looks like: a
-specific input you ran, what the skill produced, and what you expected
-instead.
+Either works: open an issue on this repo, or send me a DM on Reddit —
+u/PosteriorMotives24. Useful feedback looks like: a specific input you ran,
+what the skill produced, and what you expected instead.
 
 ## License
 

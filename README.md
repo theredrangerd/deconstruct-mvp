@@ -2,8 +2,8 @@
 
 An early-stage **Claude skill** that breaks an argument — a debate case, essay draft,
 research excerpt, or other piece of persuasive writing — into its actual logical
-parts: conclusion, premises, evidence-vs-assertion, and the unstated assumptions
-the argument quietly depends on. It optionally checks one flagged, load-bearing
+parts: conclusion, premises, contestedness, and the unstated assumptions the
+argument quietly depends on. It optionally checks one flagged, load-bearing
 factual claim against the record, and diagrams the resulting structure.
 
 This is a **draft, not a finished product**. It's part of a personal project on
@@ -20,14 +20,36 @@ that broke it" reports are all useful.
 
 Given a piece of argumentative text, it:
 
-1. Optionally asks you to guess the argument's weakest point before revealing anything (so you can check your own instincts against the analysis).
-2. States the conclusion(s) being argued for.
-3. Extracts the premises offered in support, kept atomic (causal chains get split into individual links).
-4. Classifies each premise as evidence-backed or merely asserted.
-5. Surfaces unstated assumptions the argument depends on but never states — including checking every link in a reasoning chain, not just the final one, and checking whether an evaluative conclusion ("we should do X") actually weighs costs, not just benefits.
-6. If the arguer flagged real doubt about a specific, checkable, load-bearing fact, does a small amount of targeted research on just that point.
-7. Diagrams the whole structure (premises, assumptions, conclusion) as a visual map.
-8. If you made a guess in step 1, compares it to what the analysis actually found.
+1. Checks that there's actually an argument to deconstruct — rejects input with
+   no identifiable claim-plus-support (a list of facts, a narrative, a one-liner,
+   pure sentiment), and excludes any corrupted/unreadable text span rather than
+   choking on it or silently guessing.
+2. Optionally asks you to guess the argument's weakest point before revealing
+   anything (so you can check your own instincts against the analysis).
+3. States the conclusion(s) being argued for.
+4. Extracts the premises offered in support, kept atomic (causal chains get
+   split into individual links).
+5. Surfaces unstated assumptions the argument depends on but never states —
+   including checking every link in a reasoning chain, not just the final one,
+   and checking whether an evaluative conclusion ("we should do X") actually
+   weighs costs, not just benefits.
+6. Classifies every premise and surfaced assumption by **contestedness**: for
+   each one, it writes out the strongest real objection, checks whether the
+   writer already anticipated it with their own concession, and reaches a
+   verdict — no contestation, weakly contested, contested, or strongly
+   contested. Assumptions that don't survive any real objection are dropped
+   entirely rather than padding the output.
+7. If the arguer flagged real doubt about a specific, checkable, load-bearing
+   fact — or if the contestedness check itself turned up a claim that comes out
+   strongly contested — does a small amount of targeted research on just that
+   point.
+8. Diagrams the whole structure (premises, assumptions, conclusion) as a visual
+   map, with border thickness showing each node's contestedness.
+9. Surfaces the likely rebuttals a critical reader would raise, plus any real
+   consideration the argument never addresses at all — not just attacks on
+   what it said, but things it never touched.
+10. If you made a guess in step 2, compares it to what the full analysis
+    actually found.
 
 ## Installing
 
@@ -63,15 +85,21 @@ that have already banned them have seen measurable drops in ocean plastic.
 
 ## Known limitations (read before reporting these as bugs)
 
-- The diagram step (an Artifact, HTML/SVG or Mermaid) uses claude.ai's native
-  artifact rendering. If your environment doesn't support artifacts, it falls
-  back to a plain-text structure map instead — that's expected behavior, not
-  a failure, and the underlying analysis is unaffected either way.
-- The fact-check step only fires on a narrow kind of hinge (explicit doubt +
-  checkable + load-bearing on the main conclusion) and is capped at 1-2
-  searches — it's intentionally conservative, not a general fact-checker.
-- This has been adversarially tested against roughly a dozen scenarios by
-  its author, but not by anyone else yet — that's the point of this post.
+- The diagram step uses claude.ai's native `visualize:` widget. If that tool
+  isn't available in your environment, it falls back to a plain-text
+  structure map instead — that's expected behavior, not a failure, and the
+  underlying analysis (premises, assumptions, contestedness, exchanges) is
+  unaffected either way.
+- The "no argument detected" gate is a structural check, not a quality
+  judgment — it fires on input with no identifiable claim-plus-support at
+  all, and won't run the full analysis just because you insist there's an
+  implicit argument in there. Give it the conclusion explicitly and it'll go.
+- The fact-check step only fires on a narrow kind of hinge (explicit doubt,
+  or a strongly-contested claim, that's also checkable and load-bearing on
+  the main conclusion) and is capped at 1-2 searches — it's intentionally
+  conservative, not a general fact-checker.
+- This has been adversarially tested against a range of scenarios by its
+  author, but not by anyone else yet — that's the point of this post.
 
 ## Feedback
 

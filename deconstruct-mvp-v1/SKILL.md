@@ -13,7 +13,7 @@ description: >
 
 # /deconstruct-mvp-v1 — Premise Deconstructor (MVP)
 
-Version: 3
+Version: 4
 
 **Presentation note:** the "Step N" numbers throughout this document
 organize these instructions internally — they are not all meant to produce
@@ -195,8 +195,10 @@ relationship that wasn't already implied by what's stated here.
 ## Step 7: diagram the locked map
 
 Render exactly the structure fixed in Step 6 — this step draws it, it does
-not decide it. Load the `artifact-diagramming` skill, then publish the
-diagram as an inline-SVG HTML page via the `Artifact` tool:
+not decide it. Produce the diagram as an artifact: either an HTML page with
+inline SVG, or a Mermaid flowchart, whichever renders more reliably in the
+current environment. Do not narrate the diagram in prose first — the
+artifact itself is the deliverable.
 
 - One box per premise, one per conclusion (or sub-conclusion, if the text
   has more than one layer of reasoning).
@@ -205,6 +207,14 @@ diagram as an inline-SVG HTML page via the `Artifact` tool:
   which is which at a glance, without reading the label.
 - Unstated assumptions: dashed-border boxes.
 - Arrows from premises into the conclusion they support.
+
+**If artifacts aren't supported in the current environment** (no rendering
+surface available, or an artifact attempt visibly fails), don't retry or
+block on it — fall back to a plain-text structure map instead: an indented
+tree, conclusion at the root, each premise/assumption labeled with its type
+(evidence-backed / asserted / unstated assumption) inline. This fallback is
+not a downgrade in the analysis, only in presentation — every element from
+Step 6 must still be represented.
 
 **When to skip the diagram — two cases:**
 

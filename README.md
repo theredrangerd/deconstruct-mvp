@@ -31,17 +31,22 @@ Given a piece of argumentative text, it:
 
 ## Installing
 
+**claude.ai (primary, recommended):**
+1. Download `deconstruct-mvp-v1/SKILL.md` from this repo (or clone the repo).
+2. Zip the `deconstruct-mvp-v1/` folder so the zip contains
+   `deconstruct-mvp-v1/SKILL.md` directly (not a doubly-nested folder):
+   ```
+   zip -r deconstruct-mvp-v1.zip deconstruct-mvp-v1/SKILL.md
+   ```
+3. In claude.ai, go to Settings → Capabilities → Skills (or the skill upload
+   option in your workspace) and upload the zip as a custom skill.
+4. Start a new chat and type `/deconstruct-mvp-v1` followed by the text you
+   want broken down.
+
 **Claude Code:**
 Drop the `deconstruct-mvp-v1/` folder into your skills directory:
 ```
 cp -r deconstruct-mvp-v1 ~/.claude/skills/
-```
-
-**claude.ai:**
-Zip the `deconstruct-mvp-v1/` folder (so the zip contains `deconstruct-mvp-v1/SKILL.md`,
-not a doubly-nested folder) and upload it as a custom skill in claude.ai's skill settings.
-```
-zip -r deconstruct-mvp-v1.zip deconstruct-mvp-v1/SKILL.md
 ```
 
 ## Using it
@@ -58,9 +63,10 @@ that have already banned them have seen measurable drops in ocean plastic.
 
 ## Known limitations (read before reporting these as bugs)
 
-- The diagram step depends on your Claude environment supporting inline
-  artifacts/canvases — if that's unavailable, it falls back to a text-only
-  breakdown, which is expected behavior, not a failure.
+- The diagram step (an Artifact, HTML/SVG or Mermaid) uses claude.ai's native
+  artifact rendering. If your environment doesn't support artifacts, it falls
+  back to a plain-text structure map instead — that's expected behavior, not
+  a failure, and the underlying analysis is unaffected either way.
 - The fact-check step only fires on a narrow kind of hinge (explicit doubt +
   checkable + load-bearing on the main conclusion) and is capped at 1-2
   searches — it's intentionally conservative, not a general fact-checker.
